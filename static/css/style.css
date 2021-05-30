@@ -1,0 +1,349 @@
+
+:root {
+  --blue: rgb(109, 182, 255);
+  --white: rgb(255,255,255);
+  --Lgrey: rgb(245,245,245);
+  --Dgrey: rgb(221, 221, 221);
+  --black: rgb(0,0,0);
+  --dblue: rgb(0, 125, 250);
+  
+}
+
+
+body {
+    background-color: var(--white);
+    }
+
+.container {
+    width: 80%;
+    height: 100%;
+    border: 5px solid var(--blue);
+    background-color: var(--Lgrey) ;
+    border-radius: 25px;
+    position: relative;
+    
+    margin: auto;
+}
+
+
+
+
+
+
+/* CONTAINER DIVS */
+
+.left-panel {
+    width: 20%;
+    height: 100%;
+    background-color: var(--Lgrey);
+    position: absolute;
+    border-radius: 25px;
+    
+}
+
+.specs-pane {
+  left: 8%;
+  top: 5%;
+  
+  right:8%;
+  bottom: 10px;
+  width: 84%;
+  height: 70%;
+  background-color:var(--Dgrey);
+  border-radius: 25px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: auto;
+  
+}
+
+.specs-pane::-webkit-scrollbar {
+  width: 5px;
+}
+
+.specs-pane::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(138, 138, 138, 0.3);
+  box-shadow: inset 0 0 6px rgba(138,138,138,0.3);
+  border-radius: 10px;
+}
+
+.specs-pane::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  width: 5px;
+  background-color: var(--blue);
+  }
+
+.centre {
+    width: 60%;
+    height: 70%;
+    left: 20%;
+    top: 5%;
+    background-color: rgb(0,0,0);
+    position: absolute;
+    
+    border-radius: 25px;
+
+    
+}
+
+#videoElement {
+	width: 100%;
+	height: 100%;
+  background-color: rgb(0, 0, 0);
+  position: absolute;
+  z-index: 3;
+  border-radius: 25px;
+}
+
+#FaceAlign {
+  background-image: url("/static/img/over2.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 4;
+  border-radius: 25px;
+}
+
+.right-panel {
+    width: 20%;
+    height: 100%;
+    left: 80%;
+    background-color: var(--Lgrey);
+    position: absolute;
+    border-radius: 25px;
+    border-top-left-radius: 0px;
+    
+}
+
+#display {
+  top: 5%;
+  height: 69%;
+  width: 88%;
+  left: 5%;
+  background-color: var(--Lgrey);
+  position: relative;
+  border-radius: 25px;
+  border: 5px solid var(--Dgrey);
+  
+
+}
+
+
+#pinfo {
+  white-space: pre-wrap;
+
+  left: 5%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 70%;
+  color: black;
+  position: relative;
+  overflow-y: auto;
+  width: 95%;
+}
+
+
+
+.bottom {
+    width: 100%;
+    height: 19.8%;
+    top: 80%;
+    background-color: var(--Lgrey);
+    position: absolute;
+    border-top: 5px solid white;
+    border-bottom: 2px solid white;
+    z-index: 1;
+    border-bottom-right-radius: 25px;
+    border-bottom-left-radius: 25px;
+   
+}
+.bottom p {
+  color: var(--black);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  align-content: center;
+  align-self: center;
+  font-size: 100%;
+  text-align: center;
+}
+
+#Proceed {
+  background-color: white; 
+  color: black; 
+  border: 2px solid #4CAF50;
+  left: 20%;
+  position: absolute;
+  align-self: center;
+  border-radius: 25px;
+  width: 60%;
+  top: 45%;
+
+}
+
+#Proceed:hover {
+  background-color: #4CAF50;
+  color: white;
+}
+
+
+
+/* BUTTONS */
+
+.button {
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+#button1 {
+  background-color: white; 
+  color: black; 
+  border: 2px solid #4CAF50;
+  left: 38%;
+  top: 4%;
+  position: absolute;
+  border-radius: 25px;
+}
+
+#button1:hover {
+  background-color: #4CAF50;
+  color: white;
+}
+
+#button2 {
+  background-color: var(--dblue); 
+  color: white; 
+  border: 1px solid black;
+  left: 81%;
+  padding-left: 4.3%;
+  padding-right: 4.3%;
+  top: 4%;
+  position: absolute;
+  border-radius: 10px;
+}
+
+#button2:hover {
+  background-color: rgb(38, 147, 255);
+  color: white;
+}
+
+#button3 {
+    background-color: white; 
+    color: black; 
+    border: 2px solid #17c0b8;
+    left: 5%;
+    position: absolute;
+    top: 28%;
+    border-radius: 25px;
+    padding: 16px 16px;
+    font-size: 32px;
+}
+  
+#button3:hover {
+    background-color: #17c0b8;
+    color: white;
+}
+  
+#button4 {
+    background-color: white; 
+    color: black; 
+    left: 5%;
+    border: 2px solid #17c0b8;
+    position: absolute;
+    top: 42%;
+    border-radius: 25px;
+    padding: 16px 16px;
+    font-size: 32px;
+}
+  
+#button4:hover {
+    background-color: #17c0b8;
+    color: white;
+}
+
+.specs:hover {
+  border-color: var(--blue);
+  border-width: 5px;
+  border-style: solid;
+}
+
+.specs {
+  
+  color: black; 
+  left: 10%;
+  right: 10%;
+  position: relative;
+  border-radius: 25px;
+  height: 30%;
+  width: 80%;
+  
+}
+
+#button5 {
+  background-image: url("");
+  background-size: 100%;
+ top: 5%;
+}
+#button6 {
+  background-image: url("https://cdn.shopify.com/s/files/1/0564/4710/7260/products/BV1104K4090_01_90ec3d61-f479-4ff5-93dd-9154d35b6789.jpg?v=1619619373");
+  background-size: 100%;
+ top: 5%;
+}
+
+#button7 {
+  background-image: url("https://cdn.shopify.com/s/files/1/0564/4710/7260/products/BV22132014_01_9f33acbc-0dbf-4e39-8b56-e878cba86412.jpg?v=1619619386");
+  background-size: 100%;
+  top: 5%;
+}
+#button8 {
+  background-image: url("https://cdn.shopify.com/s/files/1/0564/4710/7260/products/BV4097B501_01_f9068f04-c710-4763-bb64-069233cd087b.jpg?v=1619619403");
+  background-size: 100%;
+  top: 5%;
+}
+#button9 {
+  background-image: url( "https://cdn.shopify.com/s/files/1/0564/4710/7260/products/BV4104B504_01_1345f4ac-1895-4c93-96a4-468e382b07af.jpg?v=1619619409");
+  background-size: 100%;
+  top: 5%;
+}
+#button10 {
+  background-image: url("https://cdn.shopify.com/s/files/1/0564/4710/7260/products/BV4109501_01_c4c2ae74-c04e-4763-90dd-813fd721d3aa.jpg?v=1619619414");
+  background-size: 100%;
+  top: 5%;
+}
+#button11 {
+  background-image: url("https://cdn.shopify.com/s/files/1/0564/4710/7260/products/BV4132B504_01_aad2ffd4-73f7-462a-b3e5-fb835ce6b2c8.jpg?v=1619619420");
+  background-size: 100%;
+  top: 5%;
+}
+#button12 {
+  background-image: url("https://cdn.shopify.com/s/files/1/0564/4710/7260/products/BE4207F350113f.jpg?v=1619621364");
+  background-size: 100%;
+  top: 5%;
+}
+#button13 {
+  background-image: url("https://cdn.shopify.com/s/files/1/0564/4710/7260/products/BE4222F356413_01.jpg?v=1619621459");
+  background-size: 100%;
+  top: 5%;
+}
+#button14 {
+  background-image: url("https://cdn.shopify.com/s/files/1/0564/4710/7260/products/BE3105100513-FRONT_9e17cb30-3134-4bef-a698-269d6b59248c.jpg?v=1619621461");
+  background-size: 100%;
+  top: 5%;
+}
+#button15 {
+  background-image: url("https://cdn.shopify.com/s/files/1/0564/4710/7260/products/BE4226360579-FRONT_e8a8c04f-3bb0-4ac8-8db2-72fd3fbddd07.jpg?v=1619621464");
+  background-size: 100%;
+  top: 5%;
+}
+
+
+

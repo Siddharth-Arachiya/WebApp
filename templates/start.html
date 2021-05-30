@@ -1,0 +1,27 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+        
+    </head>
+    <body>
+
+        <div class="container">
+           
+            <div class="centre">
+                <img src={{ url }} id="videoElement">
+                <div id="FaceAlign"></div>
+                
+
+            </div>
+            
+            <div class="bottom">
+                <a href="http://localhost:5000/start?Glasses=None"><button class="button" id="Proceed">Proceed</button></a>
+                <p> Please ensure you are in a well-lit area. Align your face within the box and hit Proceed</p>
+            </div>
+        </div>
+        
+        
+    
+    </body>
+</html>
