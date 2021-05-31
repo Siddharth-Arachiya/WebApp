@@ -1,7 +1,7 @@
 click==8.0.1
 cmake==3.20.2
 colorama==0.4.4
-dlib-19.8.1-cp36-cp36m-win_amd64.whl
+https://pypi.org/simple/dlib/dlib-19.8.1-cp36-cp36m-win_amd64.whl
 Flask==2.0.1
 importlib-metadata==4.3.1
 imutils==0.5.4
