@@ -51,6 +51,10 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
+    
+      - name: Install cmake
+        run: sudo apt-get -y install cmake
+
       - name: Download artifact from build job
         uses: actions/download-artifact@v2
         with:
