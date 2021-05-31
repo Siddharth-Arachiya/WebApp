@@ -70,4 +70,4 @@ def video_feed_a():
     glass = request.args.get("Glasses")
     return Response(faceDlib(glass), mimetype='multipart/x-mixed-replace; boundary=frame')"""
 
-app.run(threaded=True)
+app.run(host='0.0.0.0',threaded=True)
