@@ -59,4 +59,4 @@ jobs:
         with:
           app-name: 'GlassesTryOn'
           slot-name: 'production'
-          publish-profile: ${{ secrets.AzureAppService_PublishProfile_2632df9f9f0642a5ad69e3e591792bbc }}
+          publish-profile: ${{ secrets.AzureAppService_PublishProfile_10416e4de49c4a84b0fcb979d3128e99 }}
