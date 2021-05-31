@@ -13,7 +13,7 @@ app = Flask(__name__)
 #change
 @app.route('/')
 def index():
-    url = "http://localhost:8000/video_feed_a?Glasses=None"  
+    url = "http://52.140.113.61:8000/video_feed_a?Glasses=None"  
     return render_template('start.html', url = url)
 
 
@@ -60,7 +60,7 @@ def start():
         cart =''
     
 
-    url = "http://localhost:8000/video_feed_a?Glasses=" + glass  
+    url = "http://52.140.113.61/8000/video_feed_a?Glasses=" + glass  
     return render_template('index1.html', url = url, title = title, brand = brand, desc = desc, price = price, cart = cart)
 
 
