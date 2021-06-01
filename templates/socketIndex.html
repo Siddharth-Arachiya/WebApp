@@ -1,0 +1,81 @@
+<html><body><div id="container">
+    <canvas id="canvasOutput"></canvas>
+    <video autoplay="true" id="videoElement"></video>
+
+</div>
+
+<div class = 'video'>
+    <img id="image">
+</div>
+
+<!--<script type="module" src="/static/script/opencv.js"></script>
+<script src="/static/script/opencv.js" type="text/javascript"></script>-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+
+
+
+
+<script>
+
+//var cv = require('opencv.js');
+function onOpenCvReady() {
+  console.log("ready cv");
+  cv['onRuntimeInitialized']=()=>{
+var socket = io('http://localhost:5000');
+
+socket.on('connect', function(){
+    console.log("Connected...!", socket.connected)
+});
+
+const video = document.querySelector("#videoElement");
+
+video.width = 500; 
+video.height = 375; ;
+
+if (navigator.mediaDevices.getUserMedia) {
+    navigator.mediaDevices.getUserMedia({ video: true })
+    .then(function (stream) {
+        video.srcObject = stream;
+        video.play();
+    })
+    .catch(function (err0r) {
+        console.log(err0r)
+        console.log("Something went wrong!");
+    });
+}
+console.log(cv);
+let src = new cv.Mat(video.height, video.width, cv.CV_8UC4);
+console.log(typeof(src))
+let dst = new cv.Mat(video.height, video.width, cv.CV_8UC1);
+let cap = new cv.VideoCapture(video);
+console.log(src);
+const FPS = 30;
+
+function processVideo() {
+    let begin = Date.now();
+    cap.read(src);
+    cv.cvtColor(src, dst, cv.COLOR_RGBA2GRAY);
+    cv.imshow("canvasOutput", dst);
+    var type = "image/png"
+    var data = document.getElementById("canvasOutput").toDataURL(type);
+    data = data.replace('data:' + type + ';base64,', ''); 
+    socket.emit('image', data);
+    // schedule next one.
+    let delay = 10000/FPS - (Date.now() - begin);
+    setTimeout(processVideo, delay);
+}
+
+setTimeout(processVideo, 0);
+
+socket.on('response_back', function(image){
+    const image_id = document.getElementById('image');
+    image_id.src = image;
+    console.log("response")
+});
+
+  };
+}
+</script>
+<script async src="/static/script/opencv.js" onload="onOpenCvReady();" type="text/javascript"></script>
+<!---<script data-main = "/static/script" src = "libs/require.js"></script>-->
+</body></html>
