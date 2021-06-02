@@ -75,7 +75,7 @@ def start():
         cart =''
     
 
-    url = "http://localhost:8080/video_feed_a?Glasses=" + glass  
+    url = "http://20.204.16.86:8080/video_feed_a?Glasses=" + glass  
     return render_template('index1.html', url = url, title = title, brand = brand, desc = desc, price = price, cart = cart)
 
 

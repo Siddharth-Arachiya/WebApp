@@ -29,7 +29,7 @@
             </div>
             
             <div class="bottom">
-                <a href="http://localhost:5000/start?Glasses=None"><button class="button" id="Proceed">Proceed</button></a>
+                <a href="http://20.204.16.86:5000/start?Glasses=None"><button class="button" id="Proceed">Proceed</button></a>
                 <p> Please ensure you are in a well-lit area. Align your face within the box and hit Proceed</p>
             </div>
         </div>
@@ -42,7 +42,7 @@
             function onOpenCvReady() {
               console.log("ready cv");
               cv['onRuntimeInitialized']=()=>{
-            var socket = io('http://localhost:5000');
+            var socket = io('http://20.204.16.86:5000');
             
             socket.on('connect', function(){
                 console.log("Connected...!", socket.connected)
