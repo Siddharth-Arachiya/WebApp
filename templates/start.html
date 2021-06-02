@@ -1,7 +1,16 @@
 <html>
     <head>
         <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+        <style>
 
+            #canvasOutput {
+                display: none;
+            }
+            #videoElement {
+            display: none;
+        }
+        </style>
         
     </head>
     <body>
@@ -9,18 +18,95 @@
         <div class="container">
            
             <div class="centre">
-                <img src={{ url }} id="videoElement">
+                <canvas id="canvasOutput"></canvas>
+                <video autoplay="true" id="videoElement"></video>
+                <div class = 'video'>
+                    <img id="image">
+                </div>
                 <div id="FaceAlign"></div>
                 
 
             </div>
             
             <div class="bottom">
-                <a href="http://20.204.16.86:5000/start?Glasses=None"><button class="button" id="Proceed">Proceed</button></a>
+                <a href="http://localhost:5000/start?Glasses=None"><button class="button" id="Proceed">Proceed</button></a>
                 <p> Please ensure you are in a well-lit area. Align your face within the box and hit Proceed</p>
             </div>
         </div>
         
+
+
+        <script>
+
+            //var cv = require('opencv.js');
+            function onOpenCvReady() {
+              console.log("ready cv");
+              cv['onRuntimeInitialized']=()=>{
+            var socket = io('http://localhost:5000');
+            
+            socket.on('connect', function(){
+                console.log("Connected...!", socket.connected)
+            });
+            
+            const video = document.querySelector("#videoElement");
+            
+            video.width = 500;
+            video.height = 375;
+            
+            if (navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ video: true })
+                .then(function (stream) {
+                    video.srcObject = stream;
+                    video.play();
+                })
+                .catch(function (err0r) {
+                    console.log(err0r)
+                    console.log("Something went wrong!");
+                });
+            }
+            console.log(cv);
+            let src = new cv.Mat(video.height, video.width, cv.CV_8UC4);
+            console.log(typeof(src))
+            let dst = new cv.Mat(video.height, video.width, cv.CV_8UC1);
+            let cap = new cv.VideoCapture(video);
+            console.log(src);
+            const FPS = 30;
+            const urlParams = new URLSearchParams(window.location.search);
+
+            
+            function processVideo() {
+                let begin = Date.now();
+                cap.read(src);
+                cv.cvtColor(src, dst, cv.COLOR_RGBA2BGRA);
+                cv.cvtColor(dst, dst, cv.COLOR_BGRA2RGBA);
+                cv.imshow("canvasOutput", dst);
+                var type = "image/png"
+                var data = document.getElementById("canvasOutput").toDataURL(type);
+                data = data.replace('data:' + type + ';base64,', ''); 
+                var glass = urlParams.get('Glasses');
+
+                var arr = [data,glass];
+
+                socket.emit('image', arr);
+                // schedule next one.
+                let delay = 10000/FPS - (Date.now() - begin);
+                setTimeout(processVideo, delay);
+            }
+            
+            setTimeout(processVideo, 0);
+            
+            socket.on('response_back', function(image){
+                const image_id = document.getElementById('image');
+                image_id.src = image;
+                console.log("response")
+            });
+            
+              };
+            }
+            </script>
+            <script async src="/static/script/opencv.js" onload="onOpenCvReady();" type="text/javascript"></script>
+
+
         
     
     </body>

@@ -1,4 +1,17 @@
-<html><body><div id="container">
+<html><body>
+    <style>
+
+        #canvasOutput {
+            display: none;
+        }
+        #videoElement {
+            display: none;
+        }
+    </style>
+    
+    
+    
+    <div id="container">
     <canvas id="canvasOutput"></canvas>
     <video autoplay="true" id="videoElement"></video>
 
@@ -21,7 +34,7 @@
 function onOpenCvReady() {
   console.log("ready cv");
   cv['onRuntimeInitialized']=()=>{
-var socket = io('http://20.204.16.86:5000');
+var socket = io('http://localhost:5000');
 
 socket.on('connect', function(){
     console.log("Connected...!", socket.connected)
@@ -29,8 +42,6 @@ socket.on('connect', function(){
 
 const video = document.querySelector("#videoElement");
 
-video.width = 500; 
-video.height = 375; ;
 
 if (navigator.mediaDevices.getUserMedia) {
     navigator.mediaDevices.getUserMedia({ video: true })
@@ -55,6 +66,7 @@ function processVideo() {
     let begin = Date.now();
     cap.read(src);
     cv.cvtColor(src, dst, cv.COLOR_RGBA2GRAY);
+    cv.cvtColor(dst, dst, cv.COLOR_BGRA2RGBA);
     cv.imshow("canvasOutput", dst);
     var type = "image/png"
     var data = document.getElementById("canvasOutput").toDataURL(type);

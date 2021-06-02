@@ -6,20 +6,25 @@ import time
 import cv2
 import dlib
 
-
+detector=dlib.get_frontal_face_detector()
+predictor = dlib.shape_predictor("shape_predictor_5_face_landmarks.dat")
 def faceDlib(glass,frame1):
-    detector=dlib.get_frontal_face_detector()
-    predictor = dlib.shape_predictor("shape_predictor_5_face_landmarks.dat")
-    try:
-        specs_ori = cv2.imread("static/resources/" + glass + ".png", -1)
-    except:
-        return
+    #detector=dlib.get_frontal_face_detector()
+    #predictor = dlib.shape_predictor("shape_predictor_5_face_landmarks.dat")
+    
 
     try:
         frame = frame1
     #frame = imutils.resize(frame, width=500)
     except Exception as e:
         print(e)
+
+    try:
+        specs_ori = cv2.imread("static/resources/" + glass + ".png", -1)
+    except:
+        (flag, encodedImage)=cv2.imencode(".jpg",frame)
+        return(encodedImage)
+
 
     if (glass == "None") or (specs_ori is None):
         pass
@@ -49,6 +54,8 @@ def faceDlib(glass,frame1):
             yf1=int(ya-(0.35*ratio))
             yf2=int(ya+(0.35*ratio))
         
+        
+
             face_glass_roi_color= frame[yf1:yf2, xlf:xrf]
             specs = cv2.resize(specs_ori, (xrf-xlf, yf2-yf1),interpolation=cv2.INTER_AREA)
             
