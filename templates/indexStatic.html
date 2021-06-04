@@ -60,7 +60,7 @@
         
         
         <script>
-            function processVideo() {
+            function processVideo(socket) {
                 var c = document.getElementById("canvasOutput");
                 var ctx = c.getContext("2d");
                 var img = document.getElementById("image");
@@ -92,7 +92,7 @@
             
             socket.on('connect', function(){
                 console.log("Connected...!", socket.connected)
-                processVideo();
+                processVideo(socket);
             });
             
             
