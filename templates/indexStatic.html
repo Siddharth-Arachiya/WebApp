@@ -65,22 +65,24 @@
             
             socket.on('connect', function(){
                 console.log("Connected...!", socket.connected)
-                function processVideo() {
+                
                 var c = document.getElementById("canvasOutput");
                 var ctx = c.getContext("2d");
                 var img = document.getElementById("image");
+                console.log("c1");
                 ctx.drawImage(img, 10, 10);
                 var type = "image/png"
                 var data = document.getElementById("canvasOutput").toDataURL(type);
                 data = data.replace('data:' + type + ';base64,', ''); 
+                console.log("c2");
                 var glass = urlParams.get('Glasses');
-
+                console.log("c3");
                 var arr = [data,glass];
 
                 socket.emit('image', arr);
                 console.log("Emitted the image");
                 
-            }
+            
             });
 
             
