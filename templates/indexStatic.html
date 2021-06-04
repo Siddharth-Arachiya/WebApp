@@ -69,7 +69,16 @@
                 var data = document.getElementById("canvasOutput").toDataURL(type);
                 data = data.replace('data:' + type + ';base64,', ''); 
                 console.log("c1");
-                var glass = urlParams.get('Glasses');
+                let searchParams = new URLSearchParams(window.location.search);
+                if (searchParams.has('sent')){
+                    var glass = searchParams.get('Glasses')
+                    console.log("case1");
+                }
+                else{
+                    var glass = "6687549685948";
+                    console.log("case2");
+                }
+                
                 console.log("c2");
                 var arr = [data,glass];
                 console.log("c3");
