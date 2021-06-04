@@ -75,8 +75,8 @@ def start():
         cart =''
     
 
-    url = "http://20.204.16.86:8080/video_feed_a?Glasses=" + glass  
-    return render_template('index1.html', url = url, title = title, brand = brand, desc = desc, price = price, cart = cart)
+    #url = "http://20.193.229.188:8080/video_feed_a?Glasses=" + glass  
+    return render_template('index1.html', title = title, brand = brand, desc = desc, price = price, cart = cart)
 
 
 @socketio.on('image')
@@ -123,4 +123,4 @@ def video_feed_a():
 #app.run(host='0.0.0.0',threaded=True)
 
 if __name__ == '__main__':
-    socketio.run(app, host='0.0.0.0')
+    socketio.run(app, host='0.0.0.0',port=80)
