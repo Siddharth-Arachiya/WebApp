@@ -23,7 +23,7 @@ Payload.max_decode_packets = 500
 
 
 app = Flask(__name__)
-socketio = SocketIO(app,cors_allowed_origins="*",ping_timeout=2, ping_interval=10)
+socketio = SocketIO(app,cors_allowed_origins="*",ping_timeout=2, ping_interval=60)
  
 #change
 @app.route('/', methods=['POST', 'GET'])
