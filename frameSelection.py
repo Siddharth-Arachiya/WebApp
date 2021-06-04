@@ -82,7 +82,7 @@ def start():
 
 @socketio.on('image')
 async def image(arr):
-    data_image = arr[0]
+    await data_image = arr[0]
     #sbuf = StringIO()  #what are these lines for? are they necessary?
     #sbuf.write(data_image)
 
@@ -112,7 +112,7 @@ async def image(arr):
     stringData = b64_src + stringData
 
     # emit the frame back
-    emit('response_back', stringData)
+    await emit('response_back', stringData)
 
 
 
