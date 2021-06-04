@@ -18,13 +18,12 @@ from io import StringIO
 import numpy as np 
 from engineio.payload import Payload
 from DlibSocket import faceDlib
-#from HaarSocket import faceDlib
 
 Payload.max_decode_packets = 500
 
 
 app = Flask(__name__)
-socketio = SocketIO(app,cors_allowed_origins="*",ping_timeout=2, ping_interval=2)
+socketio = SocketIO(app,cors_allowed_origins="*",ping_timeout=20, ping_interval=2)
  
 #change
 @app.route('/', methods=['POST', 'GET'])
@@ -81,7 +80,7 @@ def start():
 
 
 @socketio.on('image')
-async def image(arr):
+def image(arr):
     data_image = arr[0]
     #sbuf = StringIO()  #what are these lines for? are they necessary?
     #sbuf.write(data_image)
@@ -112,7 +111,7 @@ async def image(arr):
     stringData = b64_src + stringData
 
     # emit the frame back
-    await emit('response_back', stringData)
+    emit('response_back', stringData)
 
 
 
