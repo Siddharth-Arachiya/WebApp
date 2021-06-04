@@ -82,7 +82,7 @@ def start():
 
 @socketio.on('image')
 async def image(arr):
-    await data_image = arr[0]
+    data_image = arr[0]
     #sbuf = StringIO()  #what are these lines for? are they necessary?
     #sbuf.write(data_image)
 
