@@ -17,8 +17,8 @@ from PIL import Image
 from io import StringIO
 import numpy as np 
 from engineio.payload import Payload
-#from DlibSocket import faceDlib
-from HaarSocket import faceDlib
+from DlibSocket import faceDlib
+#from HaarSocket import faceDlib
 
 Payload.max_decode_packets = 500
 
@@ -81,7 +81,7 @@ def start():
 
 
 @socketio.on('image')
-def image(arr):
+async def image(arr):
     data_image = arr[0]
     #sbuf = StringIO()  #what are these lines for? are they necessary?
     #sbuf.write(data_image)
