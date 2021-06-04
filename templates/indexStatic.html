@@ -60,41 +60,42 @@
         
         
         <script>
-            window.onload = function() {
-            var socket = io('http://20.193.229.188');
-            
-            socket.on('connect', function(){
-                console.log("Connected...!", socket.connected)
-                
+            function processVideo() {
                 var c = document.getElementById("canvasOutput");
                 var ctx = c.getContext("2d");
                 var img = document.getElementById("image");
-                console.log("c1");
                 ctx.drawImage(img, 10, 10);
                 var type = "image/png"
                 var data = document.getElementById("canvasOutput").toDataURL(type);
                 data = data.replace('data:' + type + ';base64,', ''); 
-                console.log("c2");
+                console.log("c1");
                 var glass = urlParams.get('Glasses');
-                console.log("c3");
+                console.log("c2");
                 var arr = [data,glass];
-
+                console.log("c3");
                 socket.emit('image', arr);
                 console.log("Emitted the image");
                 
+            }
+            window.onload = function() {
+            var socket = io('http://20.193.229.188');
+
             
+            socket.on('connect', function(){
+                console.log("Connected...!", socket.connected)
+                processVideo();
             });
-
+            }
             
 
-            console.log("outside");
+            //console.log("outside");
             socket.on('response_back', function(image){
                 console.log("inside");
                 const image_id = document.getElementById('image');
                 image_id.src = image;
                 console.log("response")
             });
-            }
+            
 
             /*//var cv = require('opencv.js');
             function onOpenCvReady() {
