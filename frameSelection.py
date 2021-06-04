@@ -28,8 +28,7 @@ socketio = SocketIO(app,cors_allowed_origins="*",ping_timeout=20, ping_interval=
 #change
 @app.route('/', methods=['POST', 'GET'])
 def index():
-    #url = "http://localhost:8080/video_feed_a?Glasses=None"  
-    return render_template('start.html')
+    return redirect(url_for('start'))
 
 
 @app.route('/start', methods=['POST', 'GET'])
@@ -76,7 +75,7 @@ def start():
     
 
     #url = "http://20.193.229.188:8080/video_feed_a?Glasses=" + glass  
-    return render_template('index1.html', title = title, brand = brand, desc = desc, price = price, cart = cart)
+    return render_template('indexStatic.html', title = title, brand = brand, desc = desc, price = price, cart = cart)
 
 
 @socketio.on('image')
