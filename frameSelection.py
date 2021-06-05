@@ -96,7 +96,7 @@ def image(arr):
 
 
     # Process the image frame
-    #frame = imutils.resize(frame, width=700)
+    frame = imutils.resize(frame, width=700)
     #frame = cv2.flip(frame, 1)
  
 
