@@ -62,8 +62,11 @@
         <script>
             function processVideo(socket) {
                 var c = document.getElementById("canvasOutput");
-                var ctx = c.getContext("2d");
                 var img = document.getElementById("image");
+                c.height=img.height;
+                c.width=img.width;
+                var ctx = c.getContext("2d");
+                
                 ctx.drawImage(img, 0, 0 , img.width , img.height);
                 var type = "image/png"
                 var data = document.getElementById("canvasOutput").toDataURL(type);
