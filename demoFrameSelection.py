@@ -27,7 +27,7 @@ socketio = SocketIO(app,cors_allowed_origins="*",ping_timeout=20, ping_interval=
  
 @app.route('/', methods=['POST', 'GET'])
 def index():
-    return render_template("startLocal.html")
+    return render_template("demoStart.html")
 
 @app.route('/start', methods=['POST', 'GET'])
 def start():
@@ -73,7 +73,7 @@ def start():
     
 
      
-    return render_template('index1Local.html', title = title, brand = brand, desc = desc, price = price, cart = cart)
+    return render_template('demoIndex1.html', title = title, brand = brand, desc = desc, price = price, cart = cart)
 
 
 @socketio.on('image')
