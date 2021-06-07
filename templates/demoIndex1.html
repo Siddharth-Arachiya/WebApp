@@ -1,0 +1,189 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+        <style>
+
+            #canvasOutput {
+                display: none;
+            }
+            
+        </style>
+        
+    </head>
+    <body>
+
+        <div class="container">
+            <div class="left-panel">
+                <div class="specs-pane">
+                    
+                    <a href="http://20.193.229.188:5000/start?Glasses=6687549292732"><button class="button specs" id="button6"></button></a>
+                    <a href="http://20.193.229.188:5000/start?Glasses=6687549685948"><button class="button specs" id="button7"></button></a>
+                    <a href="http://20.193.229.188:5000/start?Glasses=6687550275772"><button class="button specs" id="button8"></button></a>
+                    <a href="http://20.193.229.188:5000/start?Glasses=6687550472380"><button class="button specs" id="button9"></button></a>
+                    <a href="http://20.193.229.188:5000/start?Glasses=6687550603452"><button class="button specs" id="button10"></button></a>
+                    <a href="http://20.193.229.188:5000/start?Glasses=6687550832828"><button class="button specs" id="button11"></button></a>
+                    <a href="http://20.193.229.188:5000/start?Glasses=6687614566588"><button class="button specs" id="button12"></button></a>
+                    <a href="http://20.193.229.188:5000/start?Glasses=6687620038844"><button class="button specs" id="button13"></button></a>
+                    <a href="http://20.193.229.188:5000/start?Glasses=6687620104380"><button class="button specs" id="button14"></button></a>
+                    <a href="http://20.193.229.188:5000/start?Glasses=6687620169916"><button class="button specs" id="button15"></button></a>
+                                
+                </div>
+            </div>
+            <div class="centre">
+                <canvas id="canvasOutput"></canvas>
+                <video autoplay="true" id="videoElement"></video>
+                
+                <img id="image">
+                
+                
+                
+
+            </div>
+            <div class="right-panel">
+                <button class="button" id="button3" onclick="Previous()">&#x2191;</button>
+
+                <button class="button" id="button4" onclick="Next()">&#x2193;</button></a>
+                <div id="display" >
+                    <div id="pinfo"><br>{{desc}}<br>{{price}}</div>
+                </div>
+            </div>
+            <div class="bottom">
+                <p id="PName">{{title}}</p>
+                <p id="Brand">{{brand}}</p>
+                
+                <a href={{ cart }}><button class="button" id="button2">ADD TO CART</button></a>
+                <a href="http://20.193.229.188:5000/"><button class="button" id="button1" >Retake Picture</button></a>
+                <a href="https://aequm99.myshopify.com/"><button class="button" id="back" >Back To Store</button></a>
+            </div>
+        </div>
+        
+        
+        <script>
+
+            /*window.onload = function() {
+                const video = document.querySelector("#videoElement");
+            
+            video.width = 500;
+            video.height = 375;
+            
+            if (navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ video: true })
+                .then(function (stream) {
+                    video.srcObject = stream;
+                    video.play();
+                })
+                .catch(function (err0r) {
+                    console.log(err0r)
+                    console.log("Something went wrong!");
+                });
+            }
+            }
+
+
+            function imgCapture() {
+                console.log("Capture clicked");
+            }
+
+
+
+            //var obji = new openCVReady();
+
+
+
+
+
+            //var cv = require('opencv.js');
+            function openCVReady() {
+              console.log("ready cv");
+              cv['onRuntimeInitialized']=()=>{
+            console.log("Inside cv");
+            
+            var socket = io('http://20.193.229.188:5000');
+            
+            socket.on('connect', function(){
+                console.log("refreshed");
+                console.log("Connected...!", socket.connected);
+            });
+            
+            const video = document.querySelector("#videoElement");
+            
+            video.width = 500;
+            video.height = 375;
+            
+            console.log(cv);
+            let src = new cv.Mat(video.height, video.width, cv.CV_8UC4);
+            console.log(typeof(src))
+            let dst = new cv.Mat(video.height, video.width, cv.CV_8UC1);
+            let cap = new cv.VideoCapture(video);
+            console.log(src);
+            const FPS = 30;
+            const urlParams = new URLSearchParams(window.location.search);
+            const but1 = document.getElementById("button1");
+            but1.disabled = false;
+            
+                        but1.onclick = function() {
+                console.log("Capture clicked");
+                let begin = Date.now();
+                cap.read(src);
+                cv.cvtColor(src, dst, cv.COLOR_RGBA2BGRA);
+                cv.cvtColor(dst, dst, cv.COLOR_BGRA2RGBA);
+                cv.imshow("canvasOutput", dst);
+                var type = "image/png"
+                var data = document.getElementById("canvasOutput").toDataURL(type);
+                data = data.replace('data:' + type + ';base64,', ''); 
+                var glass = urlParams.get('Glasses');
+
+                var arr = ["None",glass];
+
+                socket.emit('image', arr);
+                console.log("Emitted");
+                // schedule next one.
+                 
+                
+            }
+            */
+
+            var socket = io('http://20.193.229.188:5000');
+            
+            window.onload = function() {
+                
+            
+                socket.on('connect', function(){
+                console.log("refreshed");
+                console.log("Connected...!", socket.connected);
+            });
+            let searchParams = new URLSearchParams(window.location.search);
+                if (searchParams.has('Glasses')){
+                    var glass = searchParams.get('Glasses')
+                    console.log("case1");
+                }
+                else{
+                    var glass = "None";
+                    console.log("case2");
+                }
+                var arr = ["None",glass];
+                socket.emit('image', arr);
+                console.log("Emitted");
+            }
+
+            
+
+            
+            
+            socket.on('response_back', function(image){
+                const image_id = document.getElementById('image');
+                image_id.src = image;
+                video.pause();
+                video.style.display = "none";
+                console.log("response")
+            });
+            
+              //};
+            //}
+            </script>
+            <!--<script async src="/static/script/opencv.js" onload="openCVReady()"  type="text/javascript"></script>-->
+
+
+    </body>
+</html>
