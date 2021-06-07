@@ -1,0 +1,155 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+        <style>
+
+            #canvasOutput {
+                display: none;
+            }
+        
+        }
+        </style>
+        
+    </head>
+    <body>
+
+        <div class="container">
+           
+            <div class="centre">
+                <canvas id="canvasOutput"></canvas>
+                <video autoplay="true" id="videoElement"></video>
+                <img id="image">
+                <div id="FaceAlign"></div>
+                
+
+            </div>
+            
+            <div class="bottom">
+                <button class="button" id="Capture" onclick="imgCapture()" disabled>Capture</button>
+                <a href="http://localhost:5000/start?Glasses=None"><button class="button" id="Proceed" disabled>Proceed</button></a>
+                <p> Please ensure you are in a well-lit area. Align your face within the box and hit Proceed</p>
+            </div>
+        </div>
+        
+
+
+        <script>
+window.onload = function() {
+                const video = document.querySelector("#videoElement");
+            
+            video.width = 500;
+            video.height = 375;
+            
+            if (navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ video: true })
+                .then(function (stream) {
+                    video.srcObject = stream;
+                    video.play();
+                })
+                .catch(function (err0r) {
+                    console.log(err0r)
+                    console.log("Something went wrong!");
+                });
+            }
+            }
+
+
+            function imgCapture() {
+                console.log("Capture clicked");
+            }
+
+
+
+            //var obji = new openCVReady();
+
+
+
+
+
+            //var cv = require('opencv.js');
+            function openCVReady() {
+              console.log("ready cv");
+              cv['onRuntimeInitialized']=()=>{
+            console.log("Inside cv");
+            
+            var socket = io('http://localhost:5000');
+            
+            socket.on('connect', function(){
+                console.log("refreshed");
+                console.log("Connected...!", socket.connected);
+            });
+            
+            const video = document.querySelector("#videoElement");
+            
+            video.width = 500;
+            video.height = 375;
+            
+            console.log(cv);
+            let src = new cv.Mat(video.height, video.width, cv.CV_8UC4);
+            console.log(typeof(src))
+            let dst = new cv.Mat(video.height, video.width, cv.CV_8UC1);
+            let cap = new cv.VideoCapture(video);
+            console.log(src);
+            const FPS = 30;
+            const urlParams = new URLSearchParams(window.location.search);
+            const but1 = document.getElementById("Capture");
+            but1.disabled = false;
+            
+
+            
+            but1.onclick = function() {
+                if (this.innerHTML == "Capture") {
+                document.getElementById("Proceed").disabled = false;
+                document.getElementById("FaceAlign").style.display = "none";
+                console.log("Capture clicked");
+                let begin = Date.now();
+                cap.read(src);
+                cv.cvtColor(src, dst, cv.COLOR_RGBA2BGRA);
+                cv.cvtColor(dst, dst, cv.COLOR_BGRA2RGBA);
+                cv.imshow("canvasOutput", dst);
+                var type = "image/png"
+                var data = document.getElementById("canvasOutput").toDataURL(type);
+                data = data.replace('data:' + type + ';base64,', ''); 
+                var glass = urlParams.get('Glasses');
+
+                var arr = [data,glass];
+
+                socket.emit('image', arr);
+                console.log("Emitted");
+                // schedule next one.
+                this.innerHTML = "Re-Capture"; 
+                }
+
+                else {
+                    document.getElementById("Proceed").disabled = true;
+                    document.getElementById("FaceAlign").style.display = "block";
+                    const image_id = document.getElementById('image');
+                    image_id.style.display = "none";
+                    video.style.display = "block";
+                    this.innerHTML = "Capture";
+                    console.log("recap");
+                }
+                
+            }
+            
+            
+            
+            socket.on('response_back', function(image){
+                const image_id = document.getElementById('image');
+                image_id.style.display = "block";
+                image_id.src = image;
+                video.style.display = "none";
+                console.log("response")
+            });
+            
+              };
+            }
+            </script>
+            <script async src="/static/script/opencv.js" onload="openCVReady()" type="text/javascript"></script>
+
+
+        
+    
+    </body>
+</html>
