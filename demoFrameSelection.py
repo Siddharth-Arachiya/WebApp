@@ -105,7 +105,7 @@ def image(arr):
         #imdict[arr[2]] = im_bytes
         r.setex(arr[2], timedelta(minutes=5),
                 value=pickle.dumps(data_image))
-        im_bytes = pickle.loads(r.get(arr[2]))
+        im_bytes = pickle.dumps(r.get(arr[2]))
         im_arr = np.frombuffer(im_bytes, dtype=np.uint8)
 
         frame = cv2.imdecode(im_arr, flags=cv2.IMREAD_COLOR)
