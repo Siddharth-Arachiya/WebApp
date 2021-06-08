@@ -105,7 +105,7 @@ def image(arr):
         im_bytes = base64.b64decode(data_image)
         #imdict[arr[2]] = im_bytes
         r.setex(arr[2], timedelta(minutes=5),
-                value=pickle.dumps(data_image))
+                value=(data_image))
         im_bytes = pickle.dumps(r.get(arr[2]))
         im_arr = np.frombuffer(im_bytes, dtype=np.uint8)
 
@@ -113,7 +113,7 @@ def image(arr):
 
         #gimage = frame.copy()
 
-    imgencode = faceDlib(arr[1], frame)
+    imgencode = faceDlib(str(arr[1]), frame)
 
     stringData = base64.b64encode(imgencode).decode('utf-8')
     b64_src = 'data:image/jpg;base64,'
