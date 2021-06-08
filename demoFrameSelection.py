@@ -101,7 +101,7 @@ def image(arr):
     else:
         im_bytes = base64.b64decode(data_image)
         # imdict[arr[2]] = im_bytes
-        r.setex(arr[2], timedelta(minutes=5),
+        r.setex(arr[2], timedelta(seconds=30),
                 value=im_bytes)
 
         im_arr = np.frombuffer(im_bytes, dtype=np.uint8)
