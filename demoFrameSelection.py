@@ -21,7 +21,7 @@ from engineio.payload import Payload
 from DlibSocket import faceDlib
 import redis
 Payload.max_decode_packets = 500
-#gimage = None
+# gimage = None
 imdict = {}
 
 app = Flask(__name__)
@@ -89,35 +89,35 @@ def start():
 
 @socketio.on('image')
 def image(arr):
-    #global gimage
+    # global gimage
     data_image = arr[0]
     if data_image == "None":
         # im_bytes = imdict[arr[2]]  #please add some check for if the image does not exist
         '''r.setex(arr[2], timedelta(minutes=5),
                 value=(imdict[arr[2]]))'''
-        im_bytes = (r.get(arr[2]).decode('utf-8'))
+        im_bytes = (r.get(arr[2])
         print(type(im_bytes))
         # print(im_bytes)
-        im_arr = np.frombuffer(im_bytes, dtype=np.uint8)
-        frame = cv2.imdecode(im_arr, flags=cv2.IMREAD_COLOR)
-        #frame = gimage.copy()
+        im_arr=np.frombuffer(im_bytes, dtype=np.uint8)
+        frame=cv2.imdecode(im_arr, flags=cv2.IMREAD_COLOR)
+        # frame = gimage.copy()
     else:
-        im_bytes = base64.b64decode(data_image)
-        #imdict[arr[2]] = im_bytes
+        im_bytes=base64.b64decode(data_image)
+        # imdict[arr[2]] = im_bytes
         r.setex(arr[2], timedelta(minutes=5),
-                value=(data_image))
-        im_bytes = pickle.dumps(r.get(arr[2]))
-        im_arr = np.frombuffer(im_bytes, dtype=np.uint8)
+                value=im_bytes)
 
-        frame = cv2.imdecode(im_arr, flags=cv2.IMREAD_COLOR)
+        im_arr=np.frombuffer(im_bytes, dtype=np.uint8)
 
-        #gimage = frame.copy()
+        frame=cv2.imdecode(im_arr, flags=cv2.IMREAD_COLOR)
 
-    imgencode = faceDlib(str(arr[1]), frame)
+        # gimage = frame.copy()
 
-    stringData = base64.b64encode(imgencode).decode('utf-8')
-    b64_src = 'data:image/jpg;base64,'
-    stringData = b64_src + stringData
+    imgencode=faceDlib(str(arr[1]), frame)
+
+    stringData=base64.b64encode(imgencode).decode('utf-8')
+    b64_src='data:image/jpg;base64,'
+    stringData=b64_src + stringData
 
     # emit the frame back
     emit('response_back', stringData)
