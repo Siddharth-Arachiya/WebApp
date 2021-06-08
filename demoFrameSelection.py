@@ -95,7 +95,7 @@ def image(arr):
         # im_bytes = imdict[arr[2]]  #please add some check for if the image does not exist
         '''r.setex(arr[2], timedelta(minutes=5),
                 value=(imdict[arr[2]]))'''
-        im_bytes = (r.get(arr[2]))
+        im_bytes = (r.get(arr[2]).decode('utf-8'))
         print(type(im_bytes))
         # print(im_bytes)
         im_arr = np.frombuffer(im_bytes, dtype=np.uint8)
