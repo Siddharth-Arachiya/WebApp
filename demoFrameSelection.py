@@ -7,7 +7,7 @@ import cv2
 import requests
 import json
 import re
-
+from flask_session import Session
 
 
 from flask_socketio import SocketIO, emit
@@ -20,9 +20,15 @@ from engineio.payload import Payload
 from DlibSocket import faceDlib
 
 Payload.max_decode_packets = 500
-gimage = None
+#gimage = None
+imdict = {}
 
 app = Flask(__name__)
+
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
+Session(app)
+
 socketio = SocketIO(app,cors_allowed_origins="*",ping_timeout=20, ping_interval=2)
  
 @app.route('/', methods=['POST', 'GET'])
@@ -78,17 +84,22 @@ def start():
 
 @socketio.on('image')
 def image(arr):
-    global gimage
+    #global gimage
     data_image = arr[0]
     if data_image == "None":
-        frame = gimage.copy()
+        if data_image == "None":
+        im_bytes = imdict[arr[2]]  #please add some check for if the image does not exist
+        im_arr = np.frombuffer(im_bytes, dtype=np.uint8)
+        frame = cv2.imdecode(im_arr, flags=cv2.IMREAD_COLOR)
+        #frame = gimage.copy()
     else:
         im_bytes = base64.b64decode(data_image)
+        imdict[arr[2]]=im_bytes
         im_arr = np.frombuffer(im_bytes, dtype=np.uint8)
 
         frame = cv2.imdecode(im_arr, flags=cv2.IMREAD_COLOR)
         
-        gimage = frame.copy()
+        #gimage = frame.copy()
     
     imgencode=faceDlib(arr[1], frame)
 

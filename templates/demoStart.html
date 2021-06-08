@@ -97,7 +97,42 @@ window.onload = function() {
             but1.disabled = false;
             
 
-            
+            function getCookie(cname) {
+                
+                var name = cname + "=";
+                var decodedCookie = decodeURIComponent(document.cookie);
+                var ca = decodedCookie.split(';');
+                for(var i = 0; i <ca.length; i++) {
+                    var c = ca[i];
+                    while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                    }
+                    if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                    }
+                }
+                return "L";
+            }
+
+
+            function makeid(length) {  //making a random string
+                var result           = '';
+                var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+                var charactersLength = characters.length;
+                for ( var i = 0; i < length; i++ ) {
+                result += characters.charAt(Math.floor(Math.random() * 
+            charactersLength));
+            }
+            return result;
+            }
+
+            document.cookie = "uid=" + makeid(10);
+            console.log(getCookie("uid"));
+
+
+
+
+
             but1.onclick = function() {
                 if (this.innerHTML == "Capture") {
                 document.getElementById("Proceed").disabled = false;
@@ -112,8 +147,10 @@ window.onload = function() {
                 var data = document.getElementById("canvasOutput").toDataURL(type);
                 data = data.replace('data:' + type + ';base64,', ''); 
                 var glass = urlParams.get('Glasses');
+                var uid = getCookie("uid");
 
-                var arr = [data,glass];
+
+                var arr = [data,glass,uid];
 
                 socket.emit('image', arr);
                 console.log("Emitted");
