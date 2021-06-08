@@ -96,6 +96,7 @@ def image(arr):
         '''r.setex(arr[2], timedelta(minutes=5),
                 value=(imdict[arr[2]]))'''
         im_bytes = (r.get(arr[2]))
+        print(type(im_bytes))
         # print(im_bytes)
         im_arr = np.frombuffer(im_bytes, dtype=np.uint8)
         frame = cv2.imdecode(im_arr, flags=cv2.IMREAD_COLOR)
