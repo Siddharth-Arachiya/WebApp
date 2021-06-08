@@ -9,7 +9,7 @@ import json
 import re
 from flask_session import Session
 from datetime import timedelta
-
+import pickle
 
 from flask_socketio import SocketIO, emit
 import io
@@ -93,12 +93,13 @@ def image(arr):
     data_image = arr[0]
     if data_image == "None":
         # im_bytes = imdict[arr[2]]  #please add some check for if the image does not exist
-        r.setex(arr[2], timedelta(minutes=5), value=imdict[arr[2]])
+        r.setex(arr[2], timedelta(minutes=5),
+                value=pickle.dumps(imdict[arr[2]]))
         im_arr = np.frombuffer(im_bytes, dtype=np.uint8)
         frame = cv2.imdecode(im_arr, flags=cv2.IMREAD_COLOR)
         #frame = gimage.copy()
     else:
-        im_bytes = base64.b64decode(r.get(arr[2]))
+        im_bytes = base64.b64decode(pickle.loads(r.get(arr[2])))
         imdict[arr[2]] = im_bytes
         im_arr = np.frombuffer(im_bytes, dtype=np.uint8)
 
