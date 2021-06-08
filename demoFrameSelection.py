@@ -87,7 +87,6 @@ def image(arr):
     #global gimage
     data_image = arr[0]
     if data_image == "None":
-        if data_image == "None":
         im_bytes = imdict[arr[2]]  #please add some check for if the image does not exist
         im_arr = np.frombuffer(im_bytes, dtype=np.uint8)
         frame = cv2.imdecode(im_arr, flags=cv2.IMREAD_COLOR)
