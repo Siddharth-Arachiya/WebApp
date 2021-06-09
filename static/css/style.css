@@ -12,6 +12,7 @@
 
 body {
     background-color: var(--white);
+    background-image: linear-gradient(to bottom right, #36d1dc,  #5b86e5);
     }
 
 .container {
