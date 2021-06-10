@@ -76,17 +76,15 @@ def start():
         price = "\nPrice: Rs. " + Pinfo["product"]["variants"][0]["price"]
 
         vid = Pinfo["product"]["variants"][0]["id"]
-        #cart = "https://aequm99.myshopify.com/cart/" + str(vid) + ":1"
-        cart = "https://aequm99.myshopify.com/cart/add.js?id="+str(vid)+ "&quantity=1"
+        cart = "https://aequm99.myshopify.com/cart/" + str(vid) + ":1"
     except:
         title = ''
         brand = ''
         desc = ''
         price = ''
         cart = ''
-        vid=''
 
-    return render_template('demoIndex1.html', title=title, brand=brand, desc=desc, price=price, cart=cart, vid = vid)
+    return render_template('demoIndex1.html', title=title, brand=brand, desc=desc, price=price, cart=cart)
 
 
 @socketio.on('image')
