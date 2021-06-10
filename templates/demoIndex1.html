@@ -50,13 +50,13 @@
                 <p id="PName">{{title}}</p>
                 <p id="Brand">{{brand}}</p>
                 
-                <a href={{ cart }}><button class="button" id="button2">ADD TO CART</button></a>
+                <button class="button" id="button2">ADD TO CART</button>
                 <a href="http://20.193.229.188/"><button class="button" id="button1" >Retake Picture</button></a>
                 <a href="https://aequm99.myshopify.com/"><button class="button" id="back" >Back To Store</button></a>
             </div>
         </div>
         
-        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script>
 
             /*window.onload = function() {
@@ -197,6 +197,37 @@
                 console.log("response")
             });
             
+
+
+            /*var url = "{{cart}}"
+            $("#button2").click(function(){                
+                $.post(url, function(data, status){
+                    //console.log("Added to cart");
+                    alert("Data: " + data + "\nStatus: " + status);
+                    console.log(data);
+                    console.log(status);
+                });
+            });*/
+
+            
+            $("#button2").click(function(){
+            jQuery.post('https://aequm99.myshopify.com/cart/add.js', {
+            items: [
+                {
+                quantity: 1,
+                id: {{vid}},
+                properties: {
+                    'First name': 'Caroline'
+                }
+                }
+            ]
+            });
+            });
+
+
+
+
+
               //};
             //}
             </script>
