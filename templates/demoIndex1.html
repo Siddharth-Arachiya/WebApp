@@ -50,13 +50,13 @@
                 <p id="PName">{{title}}</p>
                 <p id="Brand">{{brand}}</p>
                 
-                <button class="button" id="button2">ADD TO CART</button>
+                <a href={{ cart }}><button class="button" id="button2">ADD TO CART</button></a>
                 <a href="http://20.193.229.188/"><button class="button" id="button1" >Retake Picture</button></a>
                 <a href="https://aequm99.myshopify.com/"><button class="button" id="back" >Back To Store</button></a>
             </div>
         </div>
         
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        
         <script>
 
             /*window.onload = function() {
@@ -77,20 +77,10 @@
                 });
             }
             }
-
-
             function imgCapture() {
                 console.log("Capture clicked");
             }
-
-
-
             //var obji = new openCVReady();
-
-
-
-
-
             //var cv = require('opencv.js');
             function openCVReady() {
               console.log("ready cv");
@@ -131,9 +121,7 @@
                 var data = document.getElementById("canvasOutput").toDataURL(type);
                 data = data.replace('data:' + type + ';base64,', ''); 
                 var glass = urlParams.get('Glasses');
-
                 var arr = ["None",glass];
-
                 socket.emit('image', arr);
                 console.log("Emitted");
                 // schedule next one.
@@ -197,37 +185,6 @@
                 console.log("response")
             });
             
-
-
-            /*var url = "{{cart}}"
-            $("#button2").click(function(){                
-                $.post(url, function(data, status){
-                    //console.log("Added to cart");
-                    alert("Data: " + data + "\nStatus: " + status);
-                    console.log(data);
-                    console.log(status);
-                });
-            });*/
-
-            
-            $("#button2").click(function(){
-            jQuery.post('https://aequm99.myshopify.com/cart/add.js', {
-            items: [
-                {
-                quantity: 1,
-                id: {{vid}},
-                properties: {
-                    'First name': 'Caroline'
-                }
-                }
-            ]
-            });
-            });
-
-
-
-
-
               //};
             //}
             </script>
