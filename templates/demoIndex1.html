@@ -213,7 +213,7 @@
             saveCart.onclick = function() {
                 document.getElementById("button2").disabled = false;
                 var prev = getCookie('cart');
-                var qty = document.getElementById('qty').value;
+                //var qty = document.getElementById('qty').value;
                 document.cookie = "cart=" + prev + String({{vid}}) + ":" + "1" + ",";
             }
             
