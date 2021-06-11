@@ -25,7 +25,9 @@ body {
     
     margin: auto;
 }
-
+#backstore {
+  left: 15%;
+}
 
 
 
@@ -223,6 +225,30 @@ body {
   border: none;
 }
 
+#Quant { 
+  color: black; 
+  left: 81%;
+  top: 10%;
+  position: absolute;
+}
+
+#qty {
+  width: 18%;
+}
+
+#Save {
+  background-color: var(--dblue); 
+  color: white; 
+  border: 1px solid black;
+  left: 87.8%;
+  width: 9.2%;
+  height: 30%;
+  padding: 0%;
+  margin: auto;
+  top: 4%;
+  position: absolute;
+  border-radius: 10px;
+}
 
 
 
@@ -280,7 +306,7 @@ body {
   left: 81%;
   padding-left: 4.3%;
   padding-right: 4.3%;
-  top: 4%;
+  top: 55%;
   position: absolute;
   border-radius: 10px;
 }

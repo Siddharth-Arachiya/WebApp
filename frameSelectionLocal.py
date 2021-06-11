@@ -71,16 +71,17 @@ def start():
 
         vid = Pinfo["product"]["variants"][0]["id"]
         cart = "https://aequm99.myshopify.com/cart/" + str(vid) + ":1"
+
     except:
         title=''
         brand=''
         desc=''
         price =''
         cart =''
-    
+        vid =''
 
      
-    return render_template('index1Local.html', title = title, brand = brand, desc = desc, price = price, cart = cart)
+    return render_template('index1Local.html', title = title, brand = brand, desc = desc, price = price, cart = cart, vid = vid)
 
 
 @socketio.on('image')

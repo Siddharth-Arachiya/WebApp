@@ -15,8 +15,11 @@
     <body>
 
         <div class="container">
+
+            <a href="https://aequm99.myshopify.com/" id="backstore"><p>Back to store</p></a>
            
             <div class="centre">
+                
                 <canvas id="canvasOutput"></canvas>
                 <video autoplay="true" id="videoElement"></video>
                 <img id="image">
@@ -27,7 +30,7 @@
             
             <div class="bottom">
                 <button class="button" id="Capture" onclick="imgCapture()" disabled>Capture</button>
-                <a href="http://localhost:5000/start?Glasses=None"><button class="button" id="Proceed" disabled>Proceed</button></a>
+                <a href="http://localhost:5000/start?Glasses=6687549685948"><button class="button" id="Proceed" disabled>Proceed</button></a>
                 <p> Please ensure you are in a well-lit area. Align your face within the box and hit Proceed</p>
             </div>
         </div>
@@ -36,6 +39,7 @@
 
         <script>
 window.onload = function() {
+    document.cookie = "cart=";
                 const video = document.querySelector("#videoElement");
             
             video.width = 500;
