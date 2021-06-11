@@ -179,9 +179,13 @@
             
             const but2 = document.getElementById("button2");
             but2.onclick = function() {
-                var qty = document.getElementById('qty').value;
                 var val = getCookie('cart');
+                if (val == ''){
+                    alert("Cart is Empty!");
+                }
+                else {
                 location.replace("https://aequm99.myshopify.com/cart/"+ val);
+                }
             }
             function getCookie(cname) {
                 var name = cname + "=";
