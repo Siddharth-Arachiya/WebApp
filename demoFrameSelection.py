@@ -83,8 +83,9 @@ def start():
         desc = ''
         price = ''
         cart = ''
+        vid =''
 
-    return render_template('demoIndex1.html', title=title, brand=brand, desc=desc, price=price, cart=cart)
+    return render_template('demoIndex1.html', title=title, brand=brand, desc=desc, price=price, cart=cart, vid = vid)
 
 
 @socketio.on('image')

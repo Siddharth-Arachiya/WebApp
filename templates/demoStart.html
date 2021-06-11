@@ -15,6 +15,7 @@
     <body>
 
         <div class="container">
+            <a href="https://aequm99.myshopify.com/" id="backstore"><p>Back to store</p></a>
            
             <div class="centre">
                 <canvas id="canvasOutput"></canvas>
@@ -36,7 +37,8 @@
 
         <script>
 window.onload = function() {
-                const video = document.querySelector("#videoElement");
+            document.cookie = "cart=";
+            const video = document.querySelector("#videoElement");
             
             video.width = 500;
             video.height = 375;

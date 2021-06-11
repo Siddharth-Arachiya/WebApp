@@ -49,9 +49,12 @@
             <div class="bottom">
                 <p id="PName">{{title}}</p>
                 <p id="Brand">{{brand}}</p>
-                
-                <a href={{ cart }}><button class="button" id="button2">ADD TO CART</button></a>
-                <a href="http://20.193.229.188/"><button class="button" id="button1" >Retake Picture</button></a>
+                <div id="Quant">
+                    Qty: <input type="number" id="qty" value="1">
+                </div>
+                <button class="button" id="button2">CHECKOUT</button>
+                <button class="button" id="Save">Save to Cart</button>
+                <a href="http://localhost:5000/"><button class="button" id="button1" >Retake Picture</button></a>
                 <a href="https://aequm99.myshopify.com/"><button class="button" id="back" >Back To Store</button></a>
             </div>
         </div>
@@ -173,6 +176,35 @@
                 console.log("Emitted");
             }
 
+            
+            const but2 = document.getElementById("button2");
+            but2.onclick = function() {
+                var qty = document.getElementById('qty').value;
+                var val = getCookie('cart');
+                location.replace("https://aequm99.myshopify.com/cart/"+ val);
+            }
+            function getCookie(cname) {
+                var name = cname + "=";
+                var decodedCookie = decodeURIComponent(document.cookie);
+                var ca = decodedCookie.split(';');
+                for(var i = 0; i <ca.length; i++) {
+                    var c = ca[i];
+                    while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                    }
+                    if (c.indexOf(name) == 0) {
+                    console.log(c.substring(name.length, c.length))
+                    return c.substring(name.length, c.length);
+                    }
+                }
+                return "L";
+            }
+            const saveCart = document.getElementById("Save");
+            saveCart.onclick = function() {
+                var prev = getCookie('cart');
+                var qty = document.getElementById('qty').value;
+                document.cookie = "cart=" + prev + String({{vid}}) + ":" + String(qty) + ",";
+            }
             
 
             
