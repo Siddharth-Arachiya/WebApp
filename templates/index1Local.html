@@ -52,7 +52,7 @@
                 <p id="PName">{{title}}</p>
                 <p id="Brand">{{brand}}</p>
                 <div id="Quant">
-                    Qty: <input type="number" id="qty" value="1">
+                    Qty: <input type="number" id="qty" min="1" value="1">
                 </div>
                 <button class="button" id="button2">CHECKOUT</button>
                 <button class="button" id="Save">Save to Cart</button>
@@ -150,7 +150,10 @@
             var socket = io('http://localhost:5000');
             
             window.onload = function() {
-                
+                var cartval = getCookie('cart');
+                if (cartval == ''){
+                    document.getElementById("button2").disabled = true;
+                }
                 
                 function getCookie(cname) {
                 
@@ -222,6 +225,7 @@
             }
             const saveCart = document.getElementById("Save");
             saveCart.onclick = function() {
+                document.getElementById("button2").disabled = false;
                 var prev = getCookie('cart');
                 var qty = document.getElementById('qty').value;
                 document.cookie = "cart=" + prev + String({{vid}}) + ":" + String(qty) + ",";

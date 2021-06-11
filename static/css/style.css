@@ -320,6 +320,12 @@ body {
   color: white;
 }
 
+#button2:disabled {
+  background-color: var(--Dgrey);
+  color: rgb(121, 121, 121);
+  border: none;
+}
+
 #button3 {
     background-color: white; 
     color: black; 
