@@ -1,0 +1,84 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        
+        <style>
+            .item {
+                border-bottom: 1px black solid;
+                height: 150px;
+                position: relative;
+                background-color:rgb(245,245,245);
+            }
+            .container { 
+                overflow-y:auto;
+                overflow-x: hidden;
+                height: 75%;
+                background-color:  rgb(231, 231, 231);
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+            }
+            /*#spacing {
+                margin: auto;
+                width: 98%;
+                height: 98%;
+                left: 1%;
+                top: 1%;
+            } */
+            .extbtn {
+                top: 80%;
+                width: 15%;
+                position: absolute;
+                background-color: rgb(0, 56, 111);
+                border-radius: 25px;
+            }
+            #checkout {
+                left: 75%;
+            }
+            #more {
+                left: 58%;
+                background-color: rgb(0,110,222);
+            }
+        </style>
+        {% block style2 %} {% endblock %}
+    </head>
+    <body>
+        <div class="container">
+            <div id="spacing">
+                {% block content %} {% endblock %}
+            </div>
+        </div>
+        
+        <button class="button extbtn" id="checkout">Proceed to Checkout</button>
+        <a href="http://localhost:5000/start?Glasses=6687549685948"><button class="button extbtn" id="more">Try on More</button></a>
+
+        <script>
+            var cout = document.getElementById('checkout');
+            cout.onclick = function() {
+                var val = getCookie('cart');
+                if (val == ''){
+                    alert("Cart is Empty!");
+                }
+                else {
+                location.replace("https://aequm99.myshopify.com/cart/"+ val);
+                }
+            }
+            function getCookie(cname) {
+                var name = cname + "=";
+                var decodedCookie = decodeURIComponent(document.cookie);
+                var ca = decodedCookie.split(';');
+                for(var i = 0; i <ca.length; i++) {
+                    var c = ca[i];
+                    while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                    }
+                    if (c.indexOf(name) == 0) {
+                    console.log(c.substring(name.length, c.length))
+                    return c.substring(name.length, c.length);
+                    }
+                }
+                return "L";
+            }
+        </script>
+        {% block morescript %} {% endblock %}
+    </body>
+</html>
