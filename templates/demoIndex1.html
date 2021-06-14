@@ -87,7 +87,7 @@
             var cartbtn = document.getElementById('cart');
             cartbtn.onclick = function() {
                 pid_list = getCookie('pid');
-                location.replace("http://20.193.229.188/cart?prods="+ pid_list);
+                window.location.href=("http://20.193.229.188/cart?prods="+ pid_list);
 
             }
 

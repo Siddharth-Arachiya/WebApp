@@ -130,7 +130,7 @@
             var cartbtn = document.getElementById('cart');
             cartbtn.onclick = function() {
                 pid_list = getCookie('pid');
-                location.replace("http://localhost:5000/cart?prods="+ pid_list);
+                window.location.href=("http://localhost:5000/cart?prods="+ pid_list);
 
             }
                 /*var products = getCookie('cart');
