@@ -81,7 +81,64 @@ def start():
         vid =''
 
      
-    return render_template('index1Local.html', title = title, brand = brand, desc = desc, price = price, cart = cart, vid = vid)
+    return render_template('index1Local.html', title = title, brand = brand, desc = desc, price = price, cart = cart, vid = vid, pid = glass)
+
+@app.route('/cart', methods=['POST', 'GET'])
+def cart():
+    pid_string=request.args.get("prods")
+    pid_list = pid_string.split(',')
+    title_list = []
+    price_list = []
+    image_list = []
+    desc_list =[]
+    length = len(pid_list)
+    print(pid_list, length)
+    for indi in pid_list:
+        if indi != '':
+            req_str="https://aequm99.myshopify.com/admin/api/2021-04/products/" + indi + ".json?fields=title,body_html,variants,images"
+            response1 = requests.get(req_str,auth=('5997eeb2ea13036b59f25dd280f73025', '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'))
+            Pinfo=response1.json()
+            try:
+                try:
+                    title=Pinfo["product"]["title"].split("|")[0]
+                except:
+                    title=Pinfo["product"]["title"]
+                
+                price = Pinfo["product"]["variants"][0]["price"]
+                
+                image = Pinfo["product"]["images"][0]["src"]
+
+                descr = Pinfo["product"]["body_html"]
+                cleanr = re.compile('<.*?>')
+                desc = re.sub(cleanr, '', descr)
+                for m in re.finditer('\n\n\n', desc):
+                    if (m.start() > 20):
+                        desc = desc[:m.start()]
+                        break
+                m2 = re.search('DESC', desc)
+                if m2:
+                    desc = desc[:m2.start()]
+                desc = desc.lstrip("\nDETAILS:\n")
+                desc = desc.rstrip("\n")
+                desc = desc.replace("\n\n"," | ")
+                desc = desc.replace("\n"," | ")
+
+
+            except:
+                title = ''
+                price = ''
+                image = ''
+                desc = ''
+            title_list.append(title)
+            price_list.append(price)
+            image_list.append(image)
+            desc_list.append(desc)
+
+    print(desc_list)
+
+        
+    
+    return render_template("cartItems.html", length = length, pid_list = pid_list, title_list = title_list, price_list = price_list, image_list = image_list, desc_list = desc_list)
 
 
 @socketio.on('image')

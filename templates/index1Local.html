@@ -1,19 +1,69 @@
 <html>
     <head>
         <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
         <style>
 
             #canvasOutput {
                 display: none;
             }
+            #price {
+                font-weight: bold;
+                font-size: 110%;
+            }
+            #PName {
+                font-family: "Open Sans", sans-serif;
+                position: relative;
+                left: 3%;
+                top: 6px;
+                font-size: 95%;
+                font-weight: bold;
+            }
+            #popup {
+                background-color: rgba(0, 0, 0, 0.6);
+                height: 100vh;
+                width: 100vw;
+                position: absolute;
+                z-index: 11;
+            }
+            #pop {
+                height: 30vh;
+                width: 30vw;
+                margin: auto;
+                top: 25vh;
+                position: relative;
+                z-index: 11;
+                background-color: white;
+            }
+
+
             
         </style>
-        
+    <meta name="viewport" content="width=device-width, initial-scale=1">    
     </head>
     <body>
+        <div id="popup" style="display: none;">
+            <div id="pop">
+                <a href="javascript:void(0)" id="closebtn" onclick="closeNav()">&times;</a>
+                <span id="poptext">You have unsaved items in your Basket. Continue back to store?</span>
+                <a href="javascript:void(0)" class="button" onclick="closeNav()">Cancel</a>
+                <a href="https://aequm99.myshopify.com/" class="button">Yes, take me back</a>
+            </div>
+        </div>
+        <div id="mySidenav" class="sidenav">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <ol id="cartlist"></ol>
 
+        </div>
+        <div id="cartdisp">
+            <button id="cart" ><i class="fa fa-shopping-bag"></i></button>
+            <span id="cartcount">0</span>
+        </div>
         <div class="container">
+            <button class="button" id="backstore" onclick="checkBag()">&#9664; Store</button>
+            <a href="http://localhost:5000/" ><button class="button" id="rescan">Re-Scan</button></a>
             <div class="left-panel">
                 <div class="specs-pane">
                     
@@ -41,29 +91,69 @@
 
             </div>
             <div class="right-panel">
-                <button class="button" id="button3" onclick="Previous()">&#x2191;</button>
-
-                <button class="button" id="button4" onclick="Next()">&#x2193;</button></a>
                 <div id="display" >
-                    <div id="pinfo"><br>{{desc}}<br>{{price}}</div>
+                    <span id="PName">{{title}}</span>
+                    <div id="pinfo"><br>{{desc}}<br><span id="price">{{price}}</span></div>
                 </div>
             </div>
             <div class="bottom">
-                <p id="PName">{{title}}</p>
+                <!--<p id="PName">{{title}}</p>
                 <p id="Brand">{{brand}}</p>
                 <div id="Quant">
                     Qty: <input type="number" id="qty" min="1" value="1">
-                </div>
-                <button class="button" id="button2">CHECKOUT</button>
-                <button class="button" id="Save">Save to Cart</button>
-                <a href="http://localhost:5000/"><button class="button" id="button1" >Retake Picture</button></a>
-                <a href="https://aequm99.myshopify.com/"><button class="button" id="back" >Back To Store</button></a>
+                </div>-->
+                <!--<button class="button" id="button2">CHECKOUT</button>-->
+                <button class="button" id="Save">Add to Cart</button>
+                <!--<a href="http://localhost:5000/"><button class="button" id="button1" >Retake Picture</button></a>
+                <a href="https://aequm99.myshopify.com/"><button class="button" id="back" >Back To Store</button></a>-->
             </div>
         </div>
         
         
         <script>
+            function checkBag() {
+                var x = getCookie('cart');
+                if (x!=''){
+                    openNav();
+                }
+                else {
+                    location.replace("https://aequm99.myshopify.com/");
+                }
+            }
+            function openNav() {
+            document.getElementById("popup").style.display = "block";
+            }
 
+            function closeNav() {
+            document.getElementById("popup").style.display = "none";
+            }
+            var cartbtn = document.getElementById('cart');
+            cartbtn.onclick = function() {
+                pid_list = getCookie('pid');
+                location.replace("http://localhost:5000/cart?prods="+ pid_list);
+
+            }
+                /*var products = getCookie('cart');
+                var prod_split = products.split(',');
+                var list = document.getElementById("cartlist");
+                list.innerHTML='';
+                for(var i = 0; i < prod_split.length; i ++){
+                    var indi = prod_split[i];
+                    var pid= indi.substring(0, indi.indexOf(':'));
+                    if(pid!=''){ 
+                        var node = document.createElement("LI");
+                        console.log(node);
+                        var textnode = document.createTextNode(String(pid)); 
+                        console.log(textnode)        
+                        node.appendChild(textnode);  
+                        console.log("Textnode appended");                            
+                        list.appendChild(node);
+                        console.log("Node appended");
+                        
+                        console.log(pid);
+                    }
+                }
+            }*/
             /*window.onload = function() {
                 const video = document.querySelector("#videoElement");
             
@@ -151,8 +241,10 @@
             
             window.onload = function() {
                 var cartval = getCookie('cart');
-                if (cartval == ''){
-                    document.getElementById("button2").disabled = true;
+                if (cartval != ''){
+                    //document.getElementById("button2").disabled = true;
+                    var split = cartval.split(',');
+                    document.getElementById("cartcount").innerText = (split.length)-1;
                 }
                 
                 function getCookie(cname) {
@@ -197,7 +289,7 @@
                 console.log("Emitted");
             }
 
-            const but2 = document.getElementById("button2");
+            /*const but2 = document.getElementById("button2");
             but2.onclick = function() {
                 var val = getCookie('cart');
                 if (val == ''){
@@ -206,7 +298,7 @@
                 else {
                 location.replace("https://aequm99.myshopify.com/cart/"+ val);
                 }
-            }
+            }*/
             function getCookie(cname) {
                 var name = cname + "=";
                 var decodedCookie = decodeURIComponent(document.cookie);
@@ -223,12 +315,56 @@
                 }
                 return "L";
             }
+            function updateCart() {
+                var products = getCookie('pid');
+                var prod_split = products.split(',');
+                var list = document.getElementById("cartlist");
+                list.innerHTML='';
+                for(var i = 0; i < prod_split.length; i ++){
+                    var indi = prod_split[i];
+                    if(indi!=''){ 
+                        var node = document.createElement("LI");
+                        console.log(node);
+                        var textnode = document.createTextNode(String(indi)); 
+                        console.log(textnode)        
+                        node.appendChild(textnode);  
+                        console.log("Textnode appended");                            
+                        list.appendChild(node);
+                        console.log("Node appended");                        
+                        console.log(indi);
+
+                        const username = '5997eeb2ea13036b59f25dd280f73025';
+                        const password = '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';
+                        let headers = new Headers();
+                        headers.set('Authorization', 'Basic ' + window.btoa(username + ":" + password));
+                        var url = "https://aequm99.myshopify.com/admin/api/2021-04/products/" + String(indi) + ".json?fields=title";
+                        fetch(url, {method:'GET',
+                            headers: headers
+                        
+                        })
+                    .then(response => {
+                    if (!response.ok) throw new Error(response.status);
+                    console.log(response.json());
+                    });
+                    
+                    }
+                }
+            }
             const saveCart = document.getElementById("Save");
             saveCart.onclick = function() {
-                document.getElementById("button2").disabled = false;
+                //document.getElementById("button2").disabled = false;
                 var prev = getCookie('cart');
-                var qty = document.getElementById('qty').value;
-                document.cookie = "cart=" + prev + String({{vid}}) + ":" + String(qty) + ",";
+                //var qty = document.getElementById('qty').value;
+                document.cookie = "cart=" + prev + String({{vid}}) + ":" + "1" + ",";
+
+                var pid_prev = getCookie('pid');
+                document.cookie = "pid=" + pid_prev + String({{pid}}) + ",";
+                var count = document.getElementById("cartcount").innerText;
+                count++;
+                document.getElementById("cartcount").innerText = count;
+                var pname = document.getElementById("PName").innerText;
+                alert(pname + " has been added to your basket");
+                
             }
 
             socket.on('response_back', function(image){
