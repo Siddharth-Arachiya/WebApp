@@ -24,7 +24,7 @@
 .desc {
     top: 55px;
     left: 160px;
-    width: 55%;
+    width: 40%;
     position: absolute;
     font-size: 2vh;
     color: darkgray;
@@ -43,7 +43,13 @@
     top: 35px;
     position: absolute;
 }
-
+.qty {
+    right: 315px;
+    top:16px;
+    position: absolute;
+    font-size: 3vh;
+    font-family: "Open Sans", sans-serif;
+}
 .remove {
     bottom: 8px;
     right: 10px;
@@ -57,11 +63,24 @@
     background-color: rgba(245,245,245,0);
     cursor: pointer;
 }
+#heading {
+    font-size: 4vh;
+    background-color: white;
+    font-family: "Open Sans", sans-serif;
+    color: rgb(30,30,30);
+}
 
 </style>
 {% endblock %}
 
 {% block content %}
+
+<div class="item" id="heading" style="height: 33px;">
+    <b style="left: 250px;position: absolute;font-weight: 400;">Product</b>
+    <b style="right:30px;position: absolute;font-weight: 400;">Price</b>
+    <b style="right:270px;position: absolute;font-weight: 400;">Quantity</b>
+
+</div>
 
 {% for i in range(length-1) %}
 
@@ -76,7 +95,10 @@
         {{desc_list[i]}}
     </div>
     <div class="price">
-        &#x20B9; {{price_list[i]}}<br><span id="qt">Qty: 1</span>
+        &#x20B9; {{price_list[i]}}<br>
+    </div>
+    <div class="qty">
+        1
     </div>
     <div class="remove">
         <button class="rmv" onclick="remove(getIndex({{i}}))">Remove</button>
@@ -108,12 +130,21 @@
     }
 
     function remove(index) {
+        index = index -1;
         var cartval = getCookie('cart');
         var items = cartval.split(',');
         console.log(items, index);
         items.splice(index,1);
         console.log(items);
         document.cookie = "cart=" + items.join();
+
+        var pval = getCookie('pid');
+        var pitems = pval.split(',');
+        console.log(pitems, index);
+        pitems.splice(index,1);
+        console.log(pitems);
+        document.cookie = "pid=" + pitems.join();
+
         parentNode = document.getElementById("spacing");
         parentNode.removeChild(parentNode.children[index]);
     }

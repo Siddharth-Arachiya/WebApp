@@ -1,6 +1,7 @@
 <html>
     <head>
         <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         
         <style>
             .item {
@@ -12,10 +13,11 @@
             .container { 
                 overflow-y:auto;
                 overflow-x: hidden;
-                height: 75%;
+                height: 60%;
                 background-color:  rgb(231, 231, 231);
                 border-top-right-radius: 0;
                 border-bottom-right-radius: 0;
+                top: 1%;
             }
             /*#spacing {
                 margin: auto;
@@ -38,10 +40,22 @@
                 left: 58%;
                 background-color: rgb(0,110,222);
             }
+            #yourbasket {
+                font-size: 10vh;
+                color: white;
+                border-bottom: white 0.5vh solid;
+                width: 80%;
+                margin: auto;
+                padding-top: 2%;
+                padding-bottom: 0.2vh;
+                font-family: "Open Sans", sans-serif;
+
+            }
         </style>
         {% block style2 %} {% endblock %}
     </head>
     <body>
+        <div id="yourbasket">Your Basket <i class="fa fa-shopping-basket"></i> </span></div>
         <div class="container">
             <div id="spacing">
                 {% block content %} {% endblock %}
@@ -59,7 +73,7 @@
                     alert("Cart is Empty!");
                 }
                 else {
-                location.replace("https://aequm99.myshopify.com/cart/"+ val);
+                location.href=("https://aequm99.myshopify.com/cart/"+ val);
                 }
             }
             function getCookie(cname) {
