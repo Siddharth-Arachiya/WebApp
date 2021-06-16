@@ -130,18 +130,17 @@
     }
 
     function remove(index) {
-        index = index -1;
         var cartval = getCookie('cart');
         var items = cartval.split(',');
         console.log(items, index);
-        items.splice(index,1);
+        items.splice(index-1,1);
         console.log(items);
         document.cookie = "cart=" + items.join();
 
         var pval = getCookie('pid');
         var pitems = pval.split(',');
         console.log(pitems, index);
-        pitems.splice(index,1);
+        pitems.splice(index-1,1); 
         console.log(pitems);
         document.cookie = "pid=" + pitems.join();
 
